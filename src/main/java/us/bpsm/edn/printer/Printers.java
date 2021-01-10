@@ -20,6 +20,7 @@ import us.bpsm.edn.protocols.Protocol;
 import us.bpsm.edn.protocols.Protocols;
 import us.bpsm.edn.util.CharClassify;
 
+import org.checkerframework.checker.determinism.qual.*;
 
 /**
  * Factory for creating {@link Printer}s and related Objects.
@@ -263,9 +264,9 @@ public class Printers {
     static Printer.Fn<Map<?, ?>> writeMapFn() {
         return new Printer.Fn<Map<?,?>>() {
             @Override
-            public void eval(Map<?,?> self, Printer writer) {
+            public void eval(@PolyDet Map<? extends @PolyDet Object,? extends @PolyDet Object> self, Printer writer) {
                 writer.append('{');
-                for (Map.Entry<?,?> p: self.entrySet()) {
+                for (Map.@Det Entry<? extends @Det Object,? extends @Det Object> p: self.entrySet()) {
                     writer.printValue(p.getKey())
                     .printValue(p.getValue());
                 }
